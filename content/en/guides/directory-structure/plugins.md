@@ -339,10 +339,18 @@ export default {
 
 Global mixins can be easily added with Nuxt plugins but can cause trouble and memory leaks when not handled correctly. Whenever you add a global mixin to your application, you should use a flag to avoid registering it multiple times:
 
-```js{}[plugins/my-mixin-plugin.js]
-if (!Vue.__my_mixin__) {
-  Vue.__my_mixin__ = true
+```js{}[plugins/my-global-mixin.js]
+import Vue from "vue"
+
+if (!Vue.__myGlobalMixin) {
+  Vue.__myGlobalMixin = true
   Vue.mixin({ ... }) // Set up your mixin then
+}
+```
+
+```js{}[nuxt.config.js]
+export default {
+  plugins: ['~/plugins/my-global-mixin.js']
 }
 ```
 
